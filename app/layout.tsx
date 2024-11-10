@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { ReactNode } from "react";
 
-import Navbar from "@components/navigation/navbar";
 import ThemeProvider from "@context/ThemeProvider";
 import "@styles/globals.css";
 
@@ -39,7 +38,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
           {children}
         </ThemeProvider>
       </body>
