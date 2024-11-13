@@ -1,5 +1,17 @@
-const SingIN = () => {
-  return <div>SingIN</div>;
+"use client";
+
+import AuthForm from "@components/forms/AuthForm";
+import { SignInSchema } from "@lib/validation";
+
+const SignIn = () => {
+  return (
+    <AuthForm
+      schema={SignInSchema}
+      formType="SIGN_IN"
+      defaultValues={{ email: "", password: "" }}
+      onSubmit={(data) => Promise.resolve({ success: true, data })}
+    />
+  );
 };
 
-export default SingIN;
+export default SignIn;
