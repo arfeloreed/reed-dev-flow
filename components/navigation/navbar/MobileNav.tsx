@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -11,8 +12,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Button } from "@components/ui/button";
-import ROUTES from "@constants/routes";
+import ROUTES from "@/constants/routes";
 
 import NavLinks from "./NavLinks";
 

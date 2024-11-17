@@ -3,9 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-import { SheetClose } from "@components/ui/sheet";
-import { sidebarLinks } from "@constants";
-import { cn } from "@lib/utils";
+import { SheetClose } from "@/components/ui/sheet";
+import { sidebarLinks } from "@/constants";
+import { cn } from "@/lib/utils";
 
 interface NavLinksProps {
   isMobileNav?: boolean;

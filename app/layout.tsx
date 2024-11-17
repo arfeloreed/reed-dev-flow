@@ -4,10 +4,10 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
-import { auth } from "@auth";
-import { Toaster } from "@components/ui/toaster";
-import ThemeProvider from "@context/ThemeProvider";
-import "@styles/globals.css";
+import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/toaster";
+import ThemeProvider from "@/context/ThemeProvider";
+import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const spaceGrotesk = Space_Grotesk({
