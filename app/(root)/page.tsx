@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import SidebarNav from "@/components/navigation/navbar/SidebarNav";
 
 const Home = async () => {
   const session = await auth();
@@ -7,7 +6,6 @@ const Home = async () => {
 
   return (
     <div className="relative flex">
-      <SidebarNav />
       <main className="relative flex-1 pt-28">
         <h1 className="text-4xl font-bold text-purple-500">
           Hello World - inter
