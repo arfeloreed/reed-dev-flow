@@ -1,65 +1,78 @@
-import { auth } from "@/auth";
+import Link from "next/link";
 
-const Home = async () => {
-  const session = await auth();
-  console.log(session);
+import LocalSearch from "@/components/search/LocalSearch";
+import { Button } from "@/components/ui/button";
+import ROUTES from "@/constants/routes";
+
+const questions = [
+  {
+    _id: "1",
+    title: "How to learn React?",
+    description: "I want to learn React, can anyone help me?",
+    tags: [
+      { _id: "1", name: "React" },
+      { _id: "2", name: "JavaScript" },
+    ],
+    author: { _id: "1", name: "John Doe" },
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date(),
+  },
+  {
+    _id: "2",
+    title: "How to learn JavaScript?",
+    description: "I want to learn JavaScript, can anyone help me?",
+    tags: [
+      { _id: "1", name: "React" },
+      { _id: "2", name: "JavaScript" },
+    ],
+    author: { _id: "1", name: "John Doe" },
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date(),
+  },
+];
+
+interface SearchParams {
+  searchParams: Promise<{ [key: string]: string }>;
+}
+
+const Home = async ({ searchParams }: SearchParams) => {
+  const { query = "" } = await searchParams;
+
+  const filteredQuestions = questions.filter((question) =>
+    question.title.toLowerCase().includes(query?.toLowerCase())
+  );
 
   return (
-    <div className="relative flex">
-      <main className="relative flex-1 pt-28">
-        <h1 className="text-4xl font-bold text-purple-500">
-          Hello World - inter
-        </h1>
-        <p className="font-space-grotesk text-4xl font-bold text-purple-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil
-          accusantium mollitia natus voluptatibus ducimus dolorem consequatur
-          incidunt dolore assumenda ab, adipisci accusamus animi iure obcaecati
-          eaque veritatis inventore ratione deserunt! Unde tenetur corporis
-          provident aut magni. Voluptates praesentium dicta rem veritatis quasi
-          velit, atque, laudantium error quae dolores amet aperiam quod nihil
-          debitis earum nulla cum! Aperiam commodi assumenda ab! Ea soluta est
-          minima quidem repellat, nulla laborum necessitatibus sapiente tenetur
-          dolore alias a incidunt assumenda, illum odio porro possimus optio ex
-          delectus quasi ut explicabo. Quos corporis eos dolores?
-        </p>
-        <p className="font-space-grotesk text-4xl font-bold text-purple-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil
-          accusantium mollitia natus voluptatibus ducimus dolorem consequatur
-          incidunt dolore assumenda ab, adipisci accusamus animi iure obcaecati
-          eaque veritatis inventore ratione deserunt! Unde tenetur corporis
-          provident aut magni. Voluptates praesentium dicta rem veritatis quasi
-          velit, atque, laudantium error quae dolores amet aperiam quod nihil
-          debitis earum nulla cum! Aperiam commodi assumenda ab! Ea soluta est
-          minima quidem repellat, nulla laborum necessitatibus sapiente tenetur
-          dolore alias a incidunt assumenda, illum odio porro possimus optio ex
-          delectus quasi ut explicabo. Quos corporis eos dolores?
-        </p>
-        <p className="font-space-grotesk text-4xl font-bold text-purple-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil
-          accusantium mollitia natus voluptatibus ducimus dolorem consequatur
-          incidunt dolore assumenda ab, adipisci accusamus animi iure obcaecati
-          eaque veritatis inventore ratione deserunt! Unde tenetur corporis
-          provident aut magni. Voluptates praesentium dicta rem veritatis quasi
-          velit, atque, laudantium error quae dolores amet aperiam quod nihil
-          debitis earum nulla cum! Aperiam commodi assumenda ab! Ea soluta est
-          minima quidem repellat, nulla laborum necessitatibus sapiente tenetur
-          dolore alias a incidunt assumenda, illum odio porro possimus optio ex
-          delectus quasi ut explicabo. Quos corporis eos dolores?
-        </p>
-        <p className="font-space-grotesk text-4xl font-bold text-purple-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil
-          accusantium mollitia natus voluptatibus ducimus dolorem consequatur
-          incidunt dolore assumenda ab, adipisci accusamus animi iure obcaecati
-          eaque veritatis inventore ratione deserunt! Unde tenetur corporis
-          provident aut magni. Voluptates praesentium dicta rem veritatis quasi
-          velit, atque, laudantium error quae dolores amet aperiam quod nihil
-          debitis earum nulla cum! Aperiam commodi assumenda ab! Ea soluta est
-          minima quidem repellat, nulla laborum necessitatibus sapiente tenetur
-          dolore alias a incidunt assumenda, illum odio porro possimus optio ex
-          delectus quasi ut explicabo. Quos corporis eos dolores?
-        </p>
-      </main>
-    </div>
+    <>
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
+
+        <Button
+          className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900"
+          asChild
+        >
+          <Link href={ROUTES.ASK_QUESTION}>Ask a Question</Link>
+        </Button>
+      </section>
+      <section className="mt-11">
+        <LocalSearch
+          route="/"
+          imgSrc="/icons/search.svg"
+          placeholder="Search questions..."
+          otherClasses="flex-1"
+        />
+      </section>
+      {/* HomeFilter */}
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {filteredQuestions.map((question) => (
+          <h1 key={question._id}>{question.title}</h1>
+        ))}
+      </div>
+    </>
   );
 };
 
