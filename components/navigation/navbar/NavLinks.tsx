@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,40 +9,41 @@ import { SheetClose } from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
 
-interface NavLinksProps {
+const NavLinks = ({
+  isMobileNav = false,
+  userId,
+}: {
   isMobileNav?: boolean;
-}
-
-const NavLinks = ({ isMobileNav = false }: NavLinksProps) => {
-  const pathName = usePathname();
-  const userId = 1;
+  userId?: string;
+}) => {
+  const pathname = usePathname();
 
   return (
     <>
-      {sidebarLinks.map((link) => {
+      {sidebarLinks.map((item) => {
         const isActive =
-          (pathName.includes(link.route) && link.route.length > 1) ||
-          pathName === link.route;
+          (pathname.includes(item.route) && item.route.length > 1) ||
+          pathname === item.route;
 
-        if (link.route === "/profile") {
-          if (userId) link.route = `${link.route}/${userId}`;
+        if (item.route === "/profile") {
+          if (userId) item.route = `${item.route}/${userId}`;
           else return null;
         }
 
         const LinkComponent = (
           <Link
-            href={link.route}
-            key={link.label}
+            href={item.route}
+            key={item.label}
             className={cn(
               isActive
                 ? "primary-gradient rounded-lg text-light-900"
                 : "text-dark300_light900",
-              "flex links-center justify-start gap-4 bg-transparent p-4"
+              "flex items-center justify-start gap-4 bg-transparent p-4"
             )}
           >
             <Image
-              src={link.imgURL}
-              alt={link.label}
+              src={item.imgURL}
+              alt={item.label}
               width={20}
               height={20}
               className={cn({ "invert-colors": !isActive })}
@@ -51,17 +54,17 @@ const NavLinks = ({ isMobileNav = false }: NavLinksProps) => {
                 !isMobileNav && "max-lg:hidden"
               )}
             >
-              {link.label}
+              {item.label}
             </p>
           </Link>
         );
 
         return isMobileNav ? (
-          <SheetClose asChild key={link.route}>
+          <SheetClose asChild key={item.route}>
             {LinkComponent}
           </SheetClose>
         ) : (
-          <React.Fragment key={link.route}>{LinkComponent}</React.Fragment>
+          <React.Fragment key={item.route}>{LinkComponent}</React.Fragment>
         );
       })}
     </>

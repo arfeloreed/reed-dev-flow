@@ -1,20 +1,10 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-import { auth, signOut } from "@/auth";
 import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-
-// Server action for sign out
-async function signOutAction() {
-  "use server";
-
-  await signOut();
-  redirect(ROUTES.HOME);
-}
 
 const questions = [
   {
@@ -62,10 +52,6 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const session = await auth();
-
-  console.log("Session: ", session);
-
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
@@ -81,20 +67,7 @@ const Home = async ({ searchParams }: SearchParams) => {
   return (
     <>
       <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-3">
-          <h1 className="h1-bold text-dark100_light900">All Questions</h1>
-
-          {session && (
-            <form action={signOutAction}>
-              <Button
-                className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900"
-                type="submit"
-              >
-                Sign Out
-              </Button>
-            </form>
-          )}
-        </div>
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Button
           className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900"
